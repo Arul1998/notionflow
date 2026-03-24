@@ -1,0 +1,22 @@
+{
+  "name": "@notionflow/cli",
+  "version": "1.0.0",
+  "bin": {
+    "notionflow": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node -e \"require('ts-node/register'); require('tsconfig-paths/register'); require('./src/index.ts')\""
+  },
+  "dependencies": {
+    "@notionflow/core": "*",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/node": "^20.12.7",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

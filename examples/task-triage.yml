@@ -1,0 +1,32 @@
+name: Task triage
+on:
+  manual: true
+
+steps:
+  - id: fetch_all_tasks
+    type: notion_op
+    action: query_database
+    database: "{{env.TASKS_DB_ID}}"
+
+  - id: triage_analysis
+    type: ai_transform
+    prompt: |
+      You are a project management assistant. Analyse these tasks and provide a triage report:
+
+      {{steps.fetch_all_tasks.output}}
+
+      Please provide:
+      1. 🔴 URGENT (overdue or High priority + To Do): List tasks needing immediate attention
+      2. 🟡 THIS WEEK (Medium priority or In Progress): Tasks to focus on this week
+      3. 🟢 BACKLOG (Low priority + To Do): Tasks that can wait
+      4. ✅ COMPLETED: Tasks marked as Done
+      5. 💡 RECOMMENDATION: Your top 3 suggested next actions
+
+      Be concise and actionable. Format clearly with bullet points.
+
+  - id: save_triage
+    type: notion_op
+    action: create_page
+    database: "{{env.STANDUPS_DB_ID}}"
+    title: "Triage Report {{date.today}}"
+    content: "{{steps.triage_analysis.output}}"

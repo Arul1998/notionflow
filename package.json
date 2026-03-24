@@ -1,0 +1,11 @@
+{
+  "name": "notionflow",
+  "version": "1.0.0",
+  "description": "A YAML-driven AI workflow engine for Notion built with Notion MCP",
+  "private": true,
+  "workspaces": ["packages/core", "packages/cli"],
+  "scripts": {
+    "build": "npm run build -w @notionflow/core && npm run build -w @notionflow/cli",
+    "notionflow": "npx ts-node -r tsconfig-paths/register packages/cli/src/index.ts"
+  }
+}

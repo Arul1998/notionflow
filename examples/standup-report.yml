@@ -1,0 +1,33 @@
+name: Daily standup report
+on:
+  schedule: "0 9 * * 1-5"  # 9am weekdays
+
+steps:
+  - id: fetch_tasks
+    type: notion_op
+    action: query_database
+    database: "{{env.TASKS_DB_ID}}"
+    filter:
+      status: ["In Progress", "Done"]
+
+  - id: generate_standup
+    type: ai_transform
+    prompt: |
+      You are a helpful assistant generating a daily standup report.
+
+      Here are the current tasks from Notion:
+      {{steps.fetch_tasks.output}}
+
+      Write a concise standup report with these three sections:
+      ✅ Done: What was completed
+      🔨 In Progress: What is being worked on
+      🚧 Blockers: Any blockers (write "None" if no blockers)
+
+      Keep it short and professional. Use bullet points.
+
+  - id: save_standup
+    type: notion_op
+    action: create_page
+    database: "{{env.STANDUPS_DB_ID}}"
+    title: "Standup {{date.today}}"
+    content: "{{steps.generate_standup.output}}"

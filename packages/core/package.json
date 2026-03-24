@@ -1,0 +1,21 @@
+{
+  "name": "@notionflow/core",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@notionhq/client": "^2.2.15",
+    "js-yaml": "^4.1.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.12.7"
+  }
+}
